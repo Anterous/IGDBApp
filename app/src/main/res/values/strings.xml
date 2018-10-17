@@ -6,6 +6,7 @@
         <item>Company</item>
         <item>Platform</item>
         <item>Genre</item>
-        <item>Game engine</item>
+        <item>Game_engines</item>
+        <item>Review</item>
     </string-array>
 </resources>

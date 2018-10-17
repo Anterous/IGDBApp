@@ -28,6 +28,20 @@
         app:layout_constraintTop_toBottomOf="@+id/end_search"
         ></Spinner>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/keyword_text"
+        android:text="Give a keyword for search"
+        app:layout_constraintTop_toBottomOf="@id/Endpoint_spinner"
+        android:textSize="20dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/keyword_text"
+        android:id="@+id/edit_keyword"/>
+
 
 
 </android.support.constraint.ConstraintLayout>

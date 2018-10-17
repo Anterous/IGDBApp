@@ -8,10 +8,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.igdb.api_android_java.callback.OnSuccessCallback;
 import com.igdb.api_android_java.wrapper.Endpoint;
 import com.igdb.api_android_java.wrapper.IGDBWrapper;
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements SearchEngine.Onse
     Button button;
     TextView textView;
     Spinner spinner;
+    EditText keywordEdit;
     SearchEngine searchEngine;
 
 
@@ -42,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements SearchEngine.Onse
         final IGDBWrapper wrapper = new IGDBWrapper(this,"7e15a0f6c16e9c907f4063d2624d8fc4", Version.STANDARD, false);
 
         spinner = findViewById(R.id.Endpoint_spinner);
+        keywordEdit = findViewById(R.id.edit_keyword);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.endpoint_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
@@ -50,17 +54,17 @@ public class MainActivity extends AppCompatActivity implements SearchEngine.Onse
     public void callSearch(View view) {
         searchEngine = new SearchEngine();
         String endpoint = spinner.getSelectedItem().toString().toUpperCase();
-        //Log.d("JPARSE", "callsearch:" + endpoint);
+        String keyword = keywordEdit.getText().toString();
         searchEngine.setContext(this);
         searchEngine.setEndpoint(endpoint);
-        //searchEngine.setParams(endpoint);
-        //searchEngine.setListener(this);
+        searchEngine.setParams(keyword);
+        searchEngine.setListener(this);
         searchEngine.start();
 
     }
 
     @Override
-    public void onSearchComplete(JSONObject data) {
-        Log.d("JPARSE", "onSearchComplete: ");
+    public void onSearchComplete(JSONArray data) {
+        Log.d("JPARSE", "onSearchComplete: "+ data.toString());
     }
 }
