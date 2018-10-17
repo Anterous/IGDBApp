@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">IGDBApp</string>
+
+    <string-array name="endpoint_array">
+        <item>Games</item>
+        <item>Company</item>
+        <item>Platform</item>
+        <item>Genre</item>
+        <item>Game engine</item>
+    </string-array>
+</resources>
