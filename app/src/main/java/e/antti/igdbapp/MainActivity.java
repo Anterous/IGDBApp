@@ -128,6 +128,7 @@ public class MainActivity extends AppCompatActivity implements SearchEngine.Onse
             Log.d("JPARSEE", "onSearchComplete: "+ String.valueOf(resultList));
             //Intent intent = new Intent(this,joku.class);
             //intent.putParcelableArrayListExtra("name", (ArrayList<? extends Parcelable>) resultList);
+
         }
     }
 }
