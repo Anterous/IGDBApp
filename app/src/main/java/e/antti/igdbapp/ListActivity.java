@@ -1,5 +1,7 @@
 package e.antti.igdbapp;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ListAdapter;
@@ -8,12 +10,13 @@ import android.widget.SimpleAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class ListActivity extends android.app.ListActivity {
 
     ListView listView;
 
-    ArrayList<HashMap<String,String>> data = new ArrayList<>();
+    ArrayList<? extends HashMap<String, String>> data = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +28,8 @@ public class ListActivity extends android.app.ListActivity {
         ListAdapter adapter = new SimpleAdapter(this,
                 data,
                 R.layout.list_item,
-                new String[]{"name","food"},
-                new int[]{R.id.name,R.id.food });
+                new String[]{"NIMI","food"},
+                new int[]{R.id.name,R.id.argument1 });
 
         listView.setAdapter(adapter);
 

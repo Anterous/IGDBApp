@@ -42,6 +42,13 @@
         app:layout_constraintTop_toBottomOf="@+id/keyword_text"
         android:id="@+id/edit_keyword"/>
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_keyword"
+        android:id="@+id/image"/>
+
 
 
 </android.support.constraint.ConstraintLayout>

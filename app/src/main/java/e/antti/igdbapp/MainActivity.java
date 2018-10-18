@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -21,6 +22,7 @@ import com.igdb.api_android_java.wrapper.Endpoint;
 import com.igdb.api_android_java.wrapper.IGDBWrapper;
 import com.igdb.api_android_java.wrapper.Parameters;
 import com.igdb.api_android_java.wrapper.Version;
+import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
@@ -41,9 +43,10 @@ public class MainActivity extends AppCompatActivity implements SearchEngine.Onse
     private String ratingCount;
     private String ag_rating;
     private String ag_rating_count;
+    private String pic_url;
 
     private static final String TAG_NAME = "name";
-    private static final String TAG_ID = "id";
+    private static final String TAG_PICTURE = "cover";
     private static final String TAG_RATING = "rating";
     private static final String TAG_RATING_COUNT = "rating_count";
     private static final String TAG_AGGREGATED_RATING = "aggregated_rating";
@@ -60,6 +63,9 @@ public class MainActivity extends AppCompatActivity implements SearchEngine.Onse
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.endpoint_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+
+        ImageView imageView = findViewById(R.id.image);
+        Picasso.get().load("https://lh3.googleusercontent.com/16TTxwHqp3GMQhsYketfNeCBYF0x3HIMltZlsq_CpFPfOCv2lV1RSRBYjkVfTJIkJA").resize(1000,800).into(imageView);
     }
 
     public void callSearch(View view) {
@@ -101,11 +107,15 @@ public class MainActivity extends AppCompatActivity implements SearchEngine.Onse
             if (c.has(TAG_AGGREGATED_RATING_COUNT)) {
                 ag_rating_count = c.getString(TAG_AGGREGATED_RATING_COUNT);
             }
+            if (c.has(TAG_PICTURE)) {
+                pic_url = c.getString(TAG_PICTURE);
+            }
             Log.d("JPARSE", "JPARSE NAME: " + name);
             Log.d("JPARSE", "JPARSE SCORE: " + rating);
             Log.d("JPARSE", "JPARSE RATING COUNT: " + ratingCount);
             Log.d("JPARSE", "JPARSE CRITIC RATING: "+ ag_rating);
             Log.d("JPARSE", "JPARSE CRITIC RATING COUNT: "+ ag_rating_count);
+            Log.d("JPARSE", "PIC URL: " + pic_url);
 
             ArrayList<HashMap<String, String>> resultList = new ArrayList<>();
 
@@ -118,14 +128,13 @@ public class MainActivity extends AppCompatActivity implements SearchEngine.Onse
             map.put(TAG_RATING_COUNT, ratingCount);
             map.put(TAG_AGGREGATED_RATING, ag_rating);
             map.put(TAG_AGGREGATED_RATING_COUNT, ag_rating_count);
+            map.put(TAG_PICTURE, pic_url);
 
             //adding HashList to ArrayList
             resultList.add(map);
 
-            Log.d("JPARSEE", "onSearchComplete: "+ String.valueOf(resultList));
-            //Intent intent = new Intent(this,joku.class);
-            //intent.putParcelableArrayListExtra("name", (ArrayList<? extends Parcelable>) resultList);
-
         }
+        Intent intent = new Intent(this, ListActivity.class);
+        this.startActivity(intent);
     }
 }
