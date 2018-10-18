@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements SearchEngine.Onse
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
+
         spinner = findViewById(R.id.Endpoint_spinner);
         keywordEdit = findViewById(R.id.edit_keyword);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.endpoint_array, android.R.layout.simple_spinner_item);
