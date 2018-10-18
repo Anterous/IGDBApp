@@ -1,5 +1,6 @@
 package e.antti.igdbapp;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements SearchEngine.Onse
     private String ag_rating;
     private String ag_rating_count;
     private String pic_url;
+    ArrayList<Game> gameArrayList;
 
     private static final String TAG_NAME = "name";
     private static final String TAG_PICTURE = "cover";
@@ -84,6 +86,8 @@ public class MainActivity extends AppCompatActivity implements SearchEngine.Onse
     public void onSearchComplete(JSONArray data) throws JSONException {
         //Log.d("JPARSE", "onSearchComplete: " + data.toString());
 
+
+         gameArrayList = new ArrayList<>();
         for (int i = 0; i < data.length(); i++) {
 
             JSONObject c = data.getJSONObject(i);
@@ -117,6 +121,8 @@ public class MainActivity extends AppCompatActivity implements SearchEngine.Onse
             Log.d("JPARSE", "JPARSE CRITIC RATING COUNT: "+ ag_rating_count);
             Log.d("JPARSE", "PIC URL: " + pic_url);
 
+            Game game = new Game(name, rating, ratingCount, ag_rating, ag_rating_count);
+            gameArrayList.add(game);
             ArrayList<HashMap<String, String>> resultList = new ArrayList<>();
 
             // creating new HashMap
@@ -134,7 +140,21 @@ public class MainActivity extends AppCompatActivity implements SearchEngine.Onse
             resultList.add(map);
 
         }
-        Intent intent = new Intent(this, ListActivity.class);
-        this.startActivity(intent);
+
+        Log.d("listActivity", "onSearchComplete: soon to listactivity");
+
+        GameWrapper gameWrapper = new GameWrapper(gameArrayList);
+        Intent intent = new Intent(this,ListActivity.class);
+        intent.putExtra("game",gameWrapper );
+
+
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
+
     }
 }
+
+
+
+
