@@ -15,6 +15,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 
 public class SearchEngine extends Thread{
 
@@ -22,6 +25,21 @@ public class SearchEngine extends Thread{
     public SearchEngine searchEngine;
     private String query;
     private String endpoint;
+
+    private String rating;
+    private String ratingCount;
+    private String ag_rating;
+    private String ag_rating_count;
+    private String pic_url;
+
+    ArrayList<Game> gameArrayList;
+
+    private static final String TAG_NAME = "name";
+    private static final String TAG_PICTURE = "cover";
+    private static final String TAG_RATING = "rating";
+    private static final String TAG_RATING_COUNT = "rating_count";
+    private static final String TAG_AGGREGATED_RATING = "aggregated_rating";
+    private static final String TAG_AGGREGATED_RATING_COUNT = "aggregated_rating_count";
 
     OnsearchCompleteInterface onSearchComplete;
 
@@ -67,7 +85,48 @@ public class SearchEngine extends Thread{
             @Override
             public void onSuccess(JSONArray result) {
                 try {
-                    searchEngine.onSearchComplete.onSearchComplete(result);
+
+                    gameArrayList = new ArrayList<>();
+                    for (int i = 0; i < result.length(); i++) {
+
+                        JSONObject c = result.getJSONObject(i);
+                        //Log.d("JPARSE", "onSuccess: " + c.toString());
+                        // Storing each json item in variable
+                        String name = c.getString(TAG_NAME);
+                        //String id = c.getString(TAG_ID);
+                        rating = "";
+                        ratingCount = "";
+                        ag_rating = "";
+                        ag_rating_count = "";
+                        if (c.has(TAG_RATING)) {
+                            rating = c.getString(TAG_RATING);
+                        }
+                        if (c.has(TAG_RATING_COUNT)) {
+                            ratingCount = c.getString(TAG_RATING_COUNT);
+                        }
+                        if (c.has(TAG_AGGREGATED_RATING)) {
+                            ag_rating = c.getString(TAG_AGGREGATED_RATING);
+                        }
+                        if (c.has(TAG_AGGREGATED_RATING_COUNT)) {
+                            ag_rating_count = c.getString(TAG_AGGREGATED_RATING_COUNT);
+                        }
+                        if (c.has(TAG_PICTURE)) {
+                            pic_url = c.getString(TAG_PICTURE);
+                        }
+                        Log.d("JPARSE", "JPARSE NAME: " + name);
+                        Log.d("JPARSE", "JPARSE SCORE: " + rating);
+                        Log.d("JPARSE", "JPARSE RATING COUNT: " + ratingCount);
+                        Log.d("JPARSE", "JPARSE CRITIC RATING: "+ ag_rating);
+                        Log.d("JPARSE", "JPARSE CRITIC RATING COUNT: "+ ag_rating_count);
+                        Log.d("JPARSE", "PIC URL: " + pic_url);
+
+                        Game game = new Game(name, rating, ratingCount, ag_rating, ag_rating_count);
+                        gameArrayList.add(game);
+
+                    }
+
+                    GameWrapper gameWrapper = new GameWrapper(gameArrayList);
+                    searchEngine.onSearchComplete.onSearchComplete(gameWrapper);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -76,7 +135,7 @@ public class SearchEngine extends Thread{
     }
 
     public interface OnsearchCompleteInterface{
-        void onSearchComplete(JSONArray data) throws JSONException;
+        void onSearchComplete(GameWrapper gameWrapper);
     }
 
 }
