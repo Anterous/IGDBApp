@@ -27,8 +27,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements SearchEngine.OnsearchCompleteInterface {
 
@@ -125,10 +127,66 @@ public class MainActivity extends AppCompatActivity implements SearchEngine.Onse
             //adding HashList to ArrayList
             resultList.add(map);
 
+
+
+
             Log.d("JPARSEE", "onSearchComplete: "+ String.valueOf(resultList));
-            //Intent intent = new Intent(this,joku.class);
-            //intent.putParcelableArrayListExtra("name", (ArrayList<? extends Parcelable>) resultList);
+
 
         }
+
+        Game game = new Game("ass odyssey");
+        Game game1 = new Game("path of grind");
+        Game game2 = new Game("generic battle Royale");
+        ArrayList<Game> gameArrayList = new ArrayList<>();
+        gameArrayList.add(game);
+        gameArrayList.add(game1);
+        gameArrayList.add(game2);
+        Log.d("listActivity", "onSearchComplete: soon to listactivity");
+
+        GameWrapper gameWrapper = new GameWrapper(gameArrayList);
+        Intent intent = new Intent(this,ListActivity.class);
+        intent.putExtra("game",gameWrapper );
+
+
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
+
     }
+}
+
+class GameWrapper implements Serializable{
+
+    private static final long serialVersionUID = 1L;//wat
+    private ArrayList<Game> games;
+
+    GameWrapper( ArrayList<Game> games){
+        this.games = games;
+    }
+
+    public ArrayList<Game> getItemDetails() {
+        return games;
+    }
+
+}
+
+class Game implements Serializable{
+
+    private static final long serialVersionUID = 1L;//wat
+    private String name;
+
+    Game(String name){
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+
 }

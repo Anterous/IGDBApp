@@ -2,6 +2,7 @@ package e.antti.igdbapp;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -19,8 +20,18 @@ public class ListActivity extends android.app.ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-
         listView = getListView();
+
+        GameWrapper gameWrapper = (GameWrapper) getIntent().getSerializableExtra("game");
+
+        ArrayList<Game> gameArrayList = gameWrapper.getItemDetails();
+
+        Log.d("listActivity", "onCreate: gameArrayList: index[0}"+ gameArrayList.get(0).getName());
+
+        HashMap<String,String> hashMap = new HashMap<>();
+        hashMap.put("name",gameArrayList.get(0).getName());
+        hashMap.put("food",gameArrayList.get(1).getName());
+        data.add(hashMap);
 
         ListAdapter adapter = new SimpleAdapter(this,
                 data,
