@@ -16,6 +16,13 @@ public class ListActivity extends android.app.ListActivity {
 
     ArrayList<HashMap<String,String>> data = new ArrayList<>();
 
+    private static final String TAG_NAME = "name";
+    private static final String TAG_ID = "id";
+    private static final String TAG_RATING = "rating";
+    private static final String TAG_RATING_COUNT = "rating_count";
+    private static final String TAG_AGGREGATED_RATING = "aggregated_rating";
+    private static final String TAG_AGGREGATED_RATING_COUNT = "aggregated_rating_count";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,13 +32,28 @@ public class ListActivity extends android.app.ListActivity {
         GameWrapper gameWrapper = (GameWrapper) getIntent().getSerializableExtra("game");
 
         ArrayList<Game> gameArrayList = gameWrapper.getItemDetails();
+        HashMap<String,String> map = new HashMap<>();
 
-        Log.d("listActivity", "onCreate: gameArrayList: index[0}"+ gameArrayList.get(0).getName());
+        for (int i =0; i < gameArrayList.size(); i++) {
+            Game game = gameArrayList.get(i);
+            Log.d("listActivity", game.getgName());
+            Log.d("listActivity", game.getuScore());
+            Log.d("listActivity", game.getuScoreCount());
+            Log.d("listActivity", game.getScore());
+            Log.d("listActivity", game.getScoreCount());
 
-        HashMap<String,String> hashMap = new HashMap<>();
-        hashMap.put("name",gameArrayList.get(0).getName());
-        hashMap.put("food",gameArrayList.get(1).getName());
-        data.add(hashMap);
+
+            map.put(TAG_NAME, game.getgName());
+            map.put(TAG_RATING, game.getuScore());
+            map.put(TAG_RATING_COUNT, game.getScoreCount());
+            map.put(TAG_AGGREGATED_RATING, game.getScore());
+            map.put(TAG_AGGREGATED_RATING_COUNT, game.getScoreCount());
+        }
+
+
+//        hashMap.put("name",gameArrayList.get(0).getName());
+//        hashMap.put("food",gameArrayList.get(1).getName());
+        data.add(map);
 
         ListAdapter adapter = new SimpleAdapter(this,
                 data,

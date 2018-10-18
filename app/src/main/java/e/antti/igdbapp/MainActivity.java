@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements SearchEngine.Onse
     private String ratingCount;
     private String ag_rating;
     private String ag_rating_count;
+    ArrayList<Game> gameArrayList;
 
     private static final String TAG_NAME = "name";
     private static final String TAG_ID = "id";
@@ -80,6 +81,8 @@ public class MainActivity extends AppCompatActivity implements SearchEngine.Onse
     public void onSearchComplete(JSONArray data) throws JSONException {
         //Log.d("JPARSE", "onSearchComplete: " + data.toString());
 
+
+         gameArrayList = new ArrayList<>();
         for (int i = 0; i < data.length(); i++) {
 
             JSONObject c = data.getJSONObject(i);
@@ -109,6 +112,8 @@ public class MainActivity extends AppCompatActivity implements SearchEngine.Onse
             Log.d("JPARSE", "JPARSE CRITIC RATING: "+ ag_rating);
             Log.d("JPARSE", "JPARSE CRITIC RATING COUNT: "+ ag_rating_count);
 
+            Game game = new Game(name, rating, ratingCount, ag_rating, ag_rating_count);
+            gameArrayList.add(game);
             ArrayList<HashMap<String, String>> resultList = new ArrayList<>();
 
             // creating new HashMap
@@ -132,13 +137,9 @@ public class MainActivity extends AppCompatActivity implements SearchEngine.Onse
 
         }
 
-        Game game = new Game("ass odyssey");
-        Game game1 = new Game("path of grind");
-        Game game2 = new Game("generic battle Royale");
-        ArrayList<Game> gameArrayList = new ArrayList<>();
-        gameArrayList.add(game);
-        gameArrayList.add(game1);
-        gameArrayList.add(game2);
+
+
+
         Log.d("listActivity", "onSearchComplete: soon to listactivity");
 
         GameWrapper gameWrapper = new GameWrapper(gameArrayList);
@@ -153,37 +154,6 @@ public class MainActivity extends AppCompatActivity implements SearchEngine.Onse
     }
 }
 
-class GameWrapper implements Serializable{
-
-    private static final long serialVersionUID = 1L;//wat
-    private ArrayList<Game> games;
-
-    GameWrapper( ArrayList<Game> games){
-        this.games = games;
-    }
-
-    public ArrayList<Game> getItemDetails() {
-        return games;
-    }
-
-}
-
-class Game implements Serializable{
-
-    private static final long serialVersionUID = 1L;//wat
-    private String name;
-
-    Game(String name){
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
 
-}
+
