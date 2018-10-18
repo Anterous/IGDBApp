@@ -3,10 +3,10 @@
 
     <string-array name="endpoint_array">
         <item>Games</item>
-        <item>Company</item>
-        <item>Platform</item>
-        <item>Genre</item>
+        <item>Companies</item>
+        <item>Platforms</item>
+        <item>Genres</item>
         <item>Game_engines</item>
-        <item>Review</item>
+        <item>Reviews</item>
     </string-array>
 </resources>

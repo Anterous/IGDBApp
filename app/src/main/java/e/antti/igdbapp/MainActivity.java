@@ -22,6 +22,7 @@ import com.igdb.api_android_java.wrapper.Version;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity implements SearchEngine.OnsearchCompleteInterface {
@@ -32,17 +33,21 @@ public class MainActivity extends AppCompatActivity implements SearchEngine.Onse
     EditText keywordEdit;
     SearchEngine searchEngine;
 
+    private String rating;
+    private String ratingCount;
 
     private static final String TAG_NAME = "name";
     private static final String TAG_ID = "id";
     private static final String TAG_RATING = "rating";
+    private static final String TAG_RATING_COUNT = "rating_count";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final IGDBWrapper wrapper = new IGDBWrapper(this,"7e15a0f6c16e9c907f4063d2624d8fc4", Version.STANDARD, false);
+        final IGDBWrapper wrapper = new IGDBWrapper(this, "7e15a0f6c16e9c907f4063d2624d8fc4", Version.STANDARD, false);
 
         spinner = findViewById(R.id.Endpoint_spinner);
         keywordEdit = findViewById(R.id.edit_keyword);
@@ -64,7 +69,27 @@ public class MainActivity extends AppCompatActivity implements SearchEngine.Onse
     }
 
     @Override
-    public void onSearchComplete(JSONArray data) {
-        Log.d("JPARSE", "onSearchComplete: "+ data.toString());
+    public void onSearchComplete(JSONArray data) throws JSONException {
+        //Log.d("JPARSE", "onSearchComplete: " + data.toString());
+
+        for (int i = 0; i < data.length(); i++) {
+
+            JSONObject c = data.getJSONObject(i);
+            //Log.d("JPARSE", "onSuccess: " + c.toString());
+            // Storing each json item in variable
+            String name = c.getString(TAG_NAME);
+            //String id = c.getString(TAG_ID);
+            rating = "";
+            ratingCount = "";
+            if (c.has(TAG_RATING)) {
+                rating = c.getString(TAG_RATING);
+            }
+            if (c.has(TAG_RATING_COUNT)) {
+                ratingCount = c.getString(TAG_RATING_COUNT);
+            }
+            Log.d("JPARSE", "JPARSE NAME: " + name);
+            Log.d("JPARSE", "JPARSE SCORE: " + rating);
+            Log.d("JPARSE", "JPARSE RATING COUNT: " + ratingCount);
+        }
     }
 }

@@ -12,6 +12,7 @@ import com.igdb.api_android_java.wrapper.Version;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 
@@ -19,7 +20,7 @@ public class SearchEngine extends Thread{
 
     private Context mContext;
     private JSONObject c;
-    private SearchEngine searchEngine;
+    public SearchEngine searchEngine;
     private String query;
     private String endpoint;
     private String rating;
@@ -27,10 +28,7 @@ public class SearchEngine extends Thread{
     public JSONArray DATA;
 
     OnsearchCompleteInterface onSearchComplete;
-    private static final String TAG_NAME = "name";
-    private static final String TAG_ID = "id";
-    private static final String TAG_RATING = "rating";
-    private static final String TAG_RATING_COUNT = "rating_count";
+
 
     public void setListener(OnsearchCompleteInterface listener){
         this.onSearchComplete = listener;
@@ -64,47 +62,33 @@ public class SearchEngine extends Thread{
                 .addSearch(query)
                 .addFields("*")
                 .addOrder("popularity:desc");
+        searchEngine = this;
 
         Log.d("JPARSE", "run: "+ endpoint);
-        wrapper.search(Endpoint.valueOf(endpoint), params, new OnSuccessCallback(){
+        wrapper.search(Endpoint.valueOf(endpoint), params, new OnSuccessCallback() {
             @Override
             public void onError(@NotNull VolleyError volleyError) {
-                    volleyError.printStackTrace();
+                volleyError.printStackTrace();
             }
 
             @Override
             public void onSuccess(JSONArray result) {
-                try{
-                    for (int i= 0; i < result.length();i++) {
 
-                         c = result.getJSONObject(i);
-                         //Log.d("JPARSE", "onSuccess: " + c.toString());
-                        // Storing each json item in variable
-                        String name = c.getString(TAG_NAME);
-                           //String id = c.getString(TAG_ID);
-                        rating = "";
-                        ratingCount = "";
-                        if (c.has(TAG_RATING)){
-                            rating = c.getString(TAG_RATING);
-                        }
-                        if (c.has(TAG_RATING_COUNT)){
-                            ratingCount = c.getString(TAG_RATING_COUNT);
-                        }
-                            //Log.d("JPARSE", "JPARSE NAME: " + name);
-                            //Log.d("JPARSE", "JPARSE SCORE: " + rating);
-                            //Log.d("JPARSE", "JPARSE RATING COUNT: " + ratingCount);
-
-                    }
-                }catch (Exception e){
+                try {
+                    searchEngine.onSearchComplete.onSearchComplete(result);
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
-            }
-        });
 
+            }
+
+        });
     }
 
+
     public interface OnsearchCompleteInterface{
-        void onSearchComplete(JSONArray data);
+        void onSearchComplete(JSONArray data) throws JSONException;
     }
 
 }
+
