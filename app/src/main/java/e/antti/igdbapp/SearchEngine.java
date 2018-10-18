@@ -19,20 +19,13 @@ import org.json.JSONObject;
 public class SearchEngine extends Thread{
 
     private Context mContext;
-    private JSONObject c;
     public SearchEngine searchEngine;
     private String query;
     private String endpoint;
-    private String rating;
-    private String ratingCount;
-    public JSONArray DATA;
 
     OnsearchCompleteInterface onSearchComplete;
 
-
-    public void setListener(OnsearchCompleteInterface listener){
-        this.onSearchComplete = listener;
-    }
+    public void setListener(OnsearchCompleteInterface listener){ this.onSearchComplete = listener; }
 
     public void setParams(String keyword) { this.query = keyword; }
 
@@ -73,18 +66,14 @@ public class SearchEngine extends Thread{
 
             @Override
             public void onSuccess(JSONArray result) {
-
                 try {
                     searchEngine.onSearchComplete.onSearchComplete(result);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
-
         });
     }
-
 
     public interface OnsearchCompleteInterface{
         void onSearchComplete(JSONArray data) throws JSONException;
