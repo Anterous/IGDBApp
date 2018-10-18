@@ -35,7 +35,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements SearchEngine.OnsearchCompleteInterface {
 
     Button button;
-    TextView textView;
     Spinner spinner;
     EditText keywordEdit;
     SearchEngine searchEngine;
@@ -57,9 +56,7 @@ public class MainActivity extends AppCompatActivity implements SearchEngine.Onse
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        final IGDBWrapper wrapper = new IGDBWrapper(this, "7e15a0f6c16e9c907f4063d2624d8fc4", Version.STANDARD, false);
-
+        
         spinner = findViewById(R.id.Endpoint_spinner);
         keywordEdit = findViewById(R.id.edit_keyword);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.endpoint_array, android.R.layout.simple_spinner_item);
