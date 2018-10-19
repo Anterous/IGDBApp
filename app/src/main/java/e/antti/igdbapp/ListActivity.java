@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -18,6 +19,7 @@ import java.util.List;
 public class ListActivity extends android.app.ListActivity {
 
     ListView listView;
+    CustomAdapter adapter;
 
     ArrayList<HashMap<String,String>> data = new ArrayList<>();
 
@@ -48,6 +50,7 @@ public class ListActivity extends android.app.ListActivity {
             Log.d("listActivity", game.getuScoreCount());
             Log.d("listActivity", game.getScore());
             Log.d("listActivity", game.getScoreCount());
+            Log.d("listActivity", game.getUrl());
 
 
             map.put(TAG_NAME, game.getgName());
@@ -55,13 +58,15 @@ public class ListActivity extends android.app.ListActivity {
             map.put(TAG_RATING_COUNT, game.getScoreCount());
             map.put(TAG_AGGREGATED_RATING, game.getScore());
             map.put(TAG_AGGREGATED_RATING_COUNT, game.getScoreCount());
+            map.put(TAG_COVER, game.getUrl());
             data.add(map);
         }
-        ListAdapter adapter = new SimpleAdapter(this,
+        /*ListAdapter adapter = new SimpleAdapter(this,
                 data,
                 R.layout.list_item,
                 new String[]{TAG_NAME},
-                new int[]{R.id.name});
+                new int[]{R.id.name});*/
+        adapter = new CustomAdapter(this, gameArrayList);
 
         listView.setAdapter(adapter);
 
