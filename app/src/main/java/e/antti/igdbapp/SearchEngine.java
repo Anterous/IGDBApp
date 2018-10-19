@@ -31,6 +31,7 @@ public class SearchEngine extends Thread{
     private String ag_rating;
     private String ag_rating_count;
     private String pic_url;
+    private String site_url;
 
     ArrayList<Game> gameArrayList;
 
@@ -40,6 +41,7 @@ public class SearchEngine extends Thread{
     private static final String TAG_RATING_COUNT = "rating_count";
     private static final String TAG_AGGREGATED_RATING = "aggregated_rating";
     private static final String TAG_AGGREGATED_RATING_COUNT = "aggregated_rating_count";
+    private static final String TAG_GAME_SITE = "url";
 
     OnsearchCompleteInterface onSearchComplete;
 
@@ -98,6 +100,8 @@ public class SearchEngine extends Thread{
                         ratingCount = "";
                         ag_rating = "";
                         ag_rating_count = "";
+                        pic_url = "";
+                        site_url = "";
                         if (c.has(TAG_RATING)) {
                             rating = c.getString(TAG_RATING);
                         }
@@ -113,14 +117,18 @@ public class SearchEngine extends Thread{
                         if (c.has(TAG_PICTURE)) {
                             pic_url = c.getString(TAG_PICTURE);
                         }
+                        if (c.has(TAG_GAME_SITE)) {
+                            site_url = c.getString(TAG_GAME_SITE);
+                        }
                         Log.d("JPARSE", "JPARSE NAME: " + name);
                         Log.d("JPARSE", "JPARSE SCORE: " + rating);
                         Log.d("JPARSE", "JPARSE RATING COUNT: " + ratingCount);
                         Log.d("JPARSE", "JPARSE CRITIC RATING: "+ ag_rating);
                         Log.d("JPARSE", "JPARSE CRITIC RATING COUNT: "+ ag_rating_count);
                         Log.d("JPARSE", "PIC URL: " + pic_url);
+                        Log.d("JPARSE", "SITE URL: " + site_url);
 
-                        Game game = new Game(name, rating, ratingCount, ag_rating, ag_rating_count, pic_url);
+                        Game game = new Game(name, rating, ratingCount, ag_rating, ag_rating_count, pic_url, site_url);
                         gameArrayList.add(game);
 
                     }

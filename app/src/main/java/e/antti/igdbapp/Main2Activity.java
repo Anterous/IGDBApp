@@ -24,6 +24,7 @@ public class Main2Activity extends AppCompatActivity {
     TextView userScoreCount;
     TextView criticScore;
     TextView criticScoreCount;
+    TextView gameSite;
 
 //    private String gName;
 //    private String uScore;
@@ -41,6 +42,7 @@ public class Main2Activity extends AppCompatActivity {
         userScoreCount = (TextView) findViewById(R.id.userScoreCount);
         criticScore = (TextView) findViewById(R.id.criticScore);
         criticScoreCount = (TextView) findViewById(R.id.criticScoreCount);
+        gameSite = (TextView) findViewById(R.id.siteURL);
         ImageView imageView = findViewById(R.id.image);
 
         Intent intent = getIntent();
@@ -56,8 +58,9 @@ public class Main2Activity extends AppCompatActivity {
         userScoreCount.append(game.getuScoreCount());
         criticScore.append(game.getScore());
         criticScoreCount.append(game.getScoreCount());
+        gameSite.setText(game.getSiteURL());
 
-        Picasso.get().load(game.getUrl()).resize(800, 500).into(imageView);
+        Picasso.get().load(game.getUrl()).resize(500, 420).into(imageView);
 
 
     }

@@ -12,8 +12,9 @@ public class Game implements Serializable {
     private String score;
     private String scoreCount;
     private String url;
+    private String siteURL;
 
-    public Game(String gameName, String userScore, String userScoreC, String score, String scoreCount, String url){
+    public Game(String gameName, String userScore, String userScoreC, String score, String scoreCount, String url, String siteUrl){
 
         this.gName = gameName;
         this.uScore = userScore;
@@ -21,6 +22,7 @@ public class Game implements Serializable {
         this.score = score;
         this.scoreCount = scoreCount;
         this.url = url;
+        this.siteURL = siteUrl;
 
     }
     public String getgName(){
@@ -40,6 +42,9 @@ public class Game implements Serializable {
     }
     public String getUrl(){
         return this.url;
+    }
+    public String getSiteURL() {
+        return this.siteURL;
     }
 
 
