@@ -57,20 +57,9 @@ public class CustomAdapter extends BaseAdapter {
         //BIND DATA
         MyHolder holder=new MyHolder(convertView);
         holder.nameTxt.setText(Games.get(position).getgName());
-        PicassoClient.downloadImage(c,Games.get(position).getUrl(),holder.img);
+        //Log.d("URLS", "getView: "+ Games.get(position).getUrl().toString());
+       // PicassoClient.downloadImage(c,Games.get(position).getUrl(),holder.img);
+        Picasso.get().load(Games.get(position).getUrl()).into(holder.img);
         return convertView;
-    }
-}
-
-class MyHolder {
-
-    TextView nameTxt;
-    ImageView img;
-
-    public MyHolder(View v) {
-
-        nameTxt= (TextView) v.findViewById(R.id.name);
-        img= (ImageView) v.findViewById(R.id.image);
-
     }
 }

@@ -40,6 +40,7 @@ public class SearchEngine extends Thread{
     private static final String TAG_RATING_COUNT = "rating_count";
     private static final String TAG_AGGREGATED_RATING = "aggregated_rating";
     private static final String TAG_AGGREGATED_RATING_COUNT = "aggregated_rating_count";
+    private static final String TAG_URL= "url";
 
     OnsearchCompleteInterface onSearchComplete;
 
@@ -69,7 +70,7 @@ public class SearchEngine extends Thread{
         endpoint = getEndpoint();
         query = getParams();
         IGDBWrapper wrapper = new IGDBWrapper(mContext,"7e15a0f6c16e9c907f4063d2624d8fc4", Version.STANDARD, false);
-        Parameters params = new Parameters()
+        final Parameters params = new Parameters()
                 .addSearch(query)
                 .addFields("*")
                 .addOrder("popularity:desc");
@@ -112,6 +113,15 @@ public class SearchEngine extends Thread{
                         }
                         if (c.has(TAG_PICTURE)) {
                             pic_url = c.getString(TAG_PICTURE);
+                            //pic_url = c.getString(TAG_URL);
+                            String[] parts = pic_url.split(",");
+                            String part1 = parts[0];
+                            part1 = part1.replace("\"","" );
+                            String[] split2 = pic_url.split(":");
+                            part1 = part1.replace("{", "");
+                            part1 = part1.replace("url:", "");
+                            part1 = part1.replace("\\", "");
+                            pic_url = part1;
                         }
                         Log.d("JPARSE", "JPARSE NAME: " + name);
                         Log.d("JPARSE", "JPARSE SCORE: " + rating);
