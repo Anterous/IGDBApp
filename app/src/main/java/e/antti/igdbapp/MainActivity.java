@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements SearchEngine.Onse
             Log.d("JPARSE", "JPARSE CRITIC RATING COUNT: "+ ag_rating_count);
             Log.d("JPARSE", "PIC URL: " + pic_url);
 
-            Game game = new Game(name, rating, ratingCount, ag_rating, ag_rating_count);
+            Game game = new Game(name, rating, ratingCount, ag_rating, ag_rating_count, pic_url);
             gameArrayList.add(game);
             ArrayList<HashMap<String, String>> resultList = new ArrayList<>();
 

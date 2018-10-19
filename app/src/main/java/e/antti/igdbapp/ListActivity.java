@@ -9,6 +9,8 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +27,7 @@ public class ListActivity extends android.app.ListActivity {
     private static final String TAG_RATING_COUNT = "rating_count";
     private static final String TAG_AGGREGATED_RATING = "aggregated_rating";
     private static final String TAG_AGGREGATED_RATING_COUNT = "aggregated_rating_count";
+    private static final String TAG_COVER = "cover";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +38,10 @@ public class ListActivity extends android.app.ListActivity {
         GameWrapper gameWrapper = (GameWrapper) getIntent().getSerializableExtra("game");
 
         ArrayList<Game> gameArrayList = gameWrapper.getItemDetails();
-        HashMap<String,String> map = new HashMap<>();
+        //HashMap<String,String> map = new HashMap<>();
 
         for (int i =0; i < gameArrayList.size(); i++) {
+            HashMap<String,String> map = new HashMap<>();
             Game game = gameArrayList.get(i);
             Log.d("listActivity", game.getgName());
             Log.d("listActivity", game.getuScore());
@@ -51,18 +55,20 @@ public class ListActivity extends android.app.ListActivity {
             map.put(TAG_RATING_COUNT, game.getScoreCount());
             map.put(TAG_AGGREGATED_RATING, game.getScore());
             map.put(TAG_AGGREGATED_RATING_COUNT, game.getScoreCount());
+            map.put(TAG_COVER, game.getUrl());
+
+            data.add(map);
         }
 
 
 //        hashMap.put("name",gameArrayList.get(0).getName());
 //        hashMap.put("food",gameArrayList.get(1).getName());
-        data.add(map);
 
         ListAdapter adapter = new SimpleAdapter(this,
                 data,
                 R.layout.list_item,
-                new String[]{"name","food"},
-                new int[]{R.id.name,R.id.argument1 });
+                new String[]{TAG_NAME},
+                new int[]{R.id.name});
 
         listView.setAdapter(adapter);
 
