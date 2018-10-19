@@ -31,6 +31,7 @@ public class SearchEngine extends Thread{
     private String ag_rating;
     private String ag_rating_count;
     private String pic_url;
+    private String site_url;
 
     ArrayList<Game> gameArrayList;
 
@@ -40,7 +41,7 @@ public class SearchEngine extends Thread{
     private static final String TAG_RATING_COUNT = "rating_count";
     private static final String TAG_AGGREGATED_RATING = "aggregated_rating";
     private static final String TAG_AGGREGATED_RATING_COUNT = "aggregated_rating_count";
-    private static final String TAG_URL= "url";
+    private static final String TAG_GAME_SITE = "url";
 
     OnsearchCompleteInterface onSearchComplete;
 
@@ -70,7 +71,7 @@ public class SearchEngine extends Thread{
         endpoint = getEndpoint();
         query = getParams();
         IGDBWrapper wrapper = new IGDBWrapper(mContext,"7e15a0f6c16e9c907f4063d2624d8fc4", Version.STANDARD, false);
-        final Parameters params = new Parameters()
+        Parameters params = new Parameters()
                 .addSearch(query)
                 .addFields("*")
                 .addOrder("popularity:desc");
@@ -99,6 +100,8 @@ public class SearchEngine extends Thread{
                         ratingCount = "";
                         ag_rating = "";
                         ag_rating_count = "";
+                        pic_url = "";
+                        site_url = "";
                         if (c.has(TAG_RATING)) {
                             rating = c.getString(TAG_RATING);
                         }
@@ -123,14 +126,18 @@ public class SearchEngine extends Thread{
                             part1 = part1.replace("\\", "");
                             pic_url = part1;
                         }
+                        if (c.has(TAG_GAME_SITE)) {
+                            site_url = c.getString(TAG_GAME_SITE);
+                        }
                         Log.d("JPARSE", "JPARSE NAME: " + name);
                         Log.d("JPARSE", "JPARSE SCORE: " + rating);
                         Log.d("JPARSE", "JPARSE RATING COUNT: " + ratingCount);
                         Log.d("JPARSE", "JPARSE CRITIC RATING: "+ ag_rating);
                         Log.d("JPARSE", "JPARSE CRITIC RATING COUNT: "+ ag_rating_count);
                         Log.d("JPARSE", "PIC URL: " + pic_url);
+                        Log.d("JPARSE", "SITE URL: " + site_url);
 
-                        Game game = new Game(name, rating, ratingCount, ag_rating, ag_rating_count, pic_url);
+                        Game game = new Game(name, rating, ratingCount, ag_rating, ag_rating_count, pic_url, site_url);
                         gameArrayList.add(game);
 
                     }
