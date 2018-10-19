@@ -11,14 +11,16 @@ public class Game implements Serializable {
     private String uScoreCount;
     private String score;
     private String scoreCount;
+    private String url;
 
-    public Game(String gameName, String userScore, String userScoreC, String score, String scoreCount){
+    public Game(String gameName, String userScore, String userScoreC, String score, String scoreCount, String url){
 
         this.gName = gameName;
         this.uScore = userScore;
         this.uScoreCount = userScoreC;
         this.score = score;
         this.scoreCount = scoreCount;
+        this.url = url;
 
     }
     public String getgName(){
@@ -35,6 +37,9 @@ public class Game implements Serializable {
     }
     public String getScoreCount(){
         return this.scoreCount;
+    }
+    public String getUrl(){
+        return this.url;
     }
 
 
