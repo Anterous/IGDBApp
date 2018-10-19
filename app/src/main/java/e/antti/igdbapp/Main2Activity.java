@@ -1,8 +1,10 @@
 package e.antti.igdbapp;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -60,7 +62,18 @@ public class Main2Activity extends AppCompatActivity {
         criticScoreCount.append(game.getScoreCount());
         gameSite.setText(game.getSiteURL());
 
-        Picasso.get().load(game.getUrl()).resize(500, 420).into(imageView);
+        Uri.Builder builder = new Uri.Builder();
+        builder.scheme("https")
+                .authority("images.igdb.com")
+                .appendPath("igdb")
+                .appendPath("image")
+                .appendPath("upload")
+                .appendPath("t_720p")
+                .appendPath(game.getUrl()+".png");
+
+        String myUrl = builder.build().toString();
+
+        Picasso.get().load(myUrl).resize(360,640).into(imageView);
 
 
     }

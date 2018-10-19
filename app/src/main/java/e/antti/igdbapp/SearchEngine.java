@@ -118,12 +118,9 @@ public class SearchEngine extends Thread{
                             pic_url = c.getString(TAG_PICTURE);
                             //pic_url = c.getString(TAG_URL);
                             String[] parts = pic_url.split(",");
-                            String part1 = parts[0];
-                            part1 = part1.replace("\"","" );
-                            String[] split2 = pic_url.split(":");
-                            part1 = part1.replace("{", "");
-                            part1 = part1.replace("url:", "");
-                            part1 = part1.replace("\\", "");
+                            String part1 = parts[1];
+                            part1 = part1.replace("\"","");
+                            part1 = part1.replace("cloudinary_id:","");
                             pic_url = part1;
                         }
                         if (c.has(TAG_GAME_SITE)) {

@@ -1,6 +1,7 @@
 package e.antti.igdbapp;
 
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,9 +58,18 @@ public class CustomAdapter extends BaseAdapter {
         //BIND DATA
         MyHolder holder=new MyHolder(convertView);
         holder.nameTxt.setText(Games.get(position).getgName());
-        //Log.d("URLS", "getView: "+ Games.get(position).getUrl().toString());
+        Uri.Builder builder = new Uri.Builder();
+        builder.scheme("https")
+                .authority("images.igdb.com")
+                .appendPath("igdb")
+                .appendPath("image")
+                .appendPath("upload")
+                .appendPath("t_thumb")
+                .appendPath(Games.get(position).getUrl()+".png");
+
+        String myUrl = builder.build().toString();
        // PicassoClient.downloadImage(c,Games.get(position).getUrl(),holder.img);
-        Picasso.get().load(Games.get(position).getUrl()).into(holder.img);
+        Picasso.get().load(myUrl).into(holder.img);
         return convertView;
     }
 }
