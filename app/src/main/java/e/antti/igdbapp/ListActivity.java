@@ -47,7 +47,7 @@ public class ListActivity extends android.app.ListActivity {
                 String argument4 = ((TextView) view.findViewById(R.id.argument4)).getText().toString();
 
                 // Starting new intent
-                Intent in = new Intent(getApplicationContext(), MainActivity.class);//TODO change activity 2 singleitemactivity lol
+                Intent in = new Intent(getApplicationContext(), Main2Activity.class);
                 in.putExtra(TAG_NAME, name);
                 in.putExtra(TAG_RATING, argument1);
                 in.putExtra(TAG_RATING_COUNT, argument2);
