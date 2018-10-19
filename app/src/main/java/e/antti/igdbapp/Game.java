@@ -1,8 +1,5 @@
 package e.antti.igdbapp;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -26,14 +23,6 @@ public class Game implements Serializable {
         this.url = url;
 
     }
-//    public Game(Parcel in){
-//        gName = in.readString();
-//        uScore = in.readString();
-//        uScoreCount = in.readString();
-//        score = in.readString();
-//        scoreCount = in.readString();
-//
-//    }
     public String getgName(){
         return this.gName;
     }
@@ -51,31 +40,6 @@ public class Game implements Serializable {
     }
     public String getUrl(){return this.url;}
 
-//    @Override
-//    public int describeContents() {
-//        return 0;
-//    }
-//
-//    @Override
-//    public void writeToParcel(Parcel parcel, int i) {
-//        parcel.writeString(gName);
-//        parcel.writeString(uScore);
-//        parcel.writeString(uScoreCount);
-//        parcel.writeString(score);
-//        parcel.writeString(scoreCount);
-//
-//    }
-//    public static final Parcelable.Creator<Game> CREATOR = new Parcelable.Creator<Game>()
-//    {
-//        public Game createFromParcel(Parcel in)
-//        {
-//            return new Game(in);
-//        }
-//        public Game[] newArray(int size)
-//        {
-//            return new Game[size];
-//        }
-//    };
 
 }
 class GameWrapper implements Serializable{

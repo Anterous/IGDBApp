@@ -38,11 +38,11 @@ public class ListActivity extends android.app.ListActivity {
         GameWrapper gameWrapper = (GameWrapper) getIntent().getSerializableExtra("game");
 
         ArrayList<Game> gameArrayList = gameWrapper.getItemDetails();
-        //HashMap<String,String> map = new HashMap<>();
+
 
         for (int i =0; i < gameArrayList.size(); i++) {
-            HashMap<String,String> map = new HashMap<>();
             Game game = gameArrayList.get(i);
+            HashMap<String,String> map = new HashMap<>();
             Log.d("listActivity", game.getgName());
             Log.d("listActivity", game.getuScore());
             Log.d("listActivity", game.getuScoreCount());
@@ -55,15 +55,8 @@ public class ListActivity extends android.app.ListActivity {
             map.put(TAG_RATING_COUNT, game.getScoreCount());
             map.put(TAG_AGGREGATED_RATING, game.getScore());
             map.put(TAG_AGGREGATED_RATING_COUNT, game.getScoreCount());
-            map.put(TAG_COVER, game.getUrl());
-
             data.add(map);
         }
-
-
-//        hashMap.put("name",gameArrayList.get(0).getName());
-//        hashMap.put("food",gameArrayList.get(1).getName());
-
         ListAdapter adapter = new SimpleAdapter(this,
                 data,
                 R.layout.list_item,
